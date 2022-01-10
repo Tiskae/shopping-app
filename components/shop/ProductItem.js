@@ -20,7 +20,7 @@ const ProductItem = (props) => {
   return (
     <View style={styles.product}>
       <View style={styles.touchable}>
-        <TouchableCmp useForeground>
+        <TouchableCmp useForeground onPress={props.onViewDetail}>
           <View>
             <View style={styles.imageContainer}>
               <Image style={styles.image} source={{ uri: props.imageUrl }} />
@@ -77,11 +77,13 @@ const styles = StyleSheet.create({
   details: { alignItems: "center", height: "15%", padding: 10 },
   title: {
     fontSize: 18,
-    margin: 4,
+    margin: 2,
+    fontFamily: "open-sans-bold",
   },
   price: {
     fontSize: 14,
     color: "#888",
+    fontFamily: "open-sans",
   },
   actions: {
     flexDirection: "row",

@@ -2,8 +2,8 @@ import { Platform } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import ProductOverviewScreen from "../screens/shop/ProductOverview";
-import ProductDetailScreen from "../screens/shop/ProductDetail";
+import ProductOverviewScreen from "../screens/shop/ProductOverviewScreen";
+import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
 
 import colors from "../constants/colors";
 
@@ -19,7 +19,9 @@ const ShopNavigator = () => {
               Platform.OS === "android" ? colors.primary : "white",
           },
           headerTintColor: Platform.OS === "android" ? "white" : colors.primary,
-          statusBarStyle: "dark",
+          headerTitleStyle: { fontFamily: "open-sans-bold" },
+          headerBackTitleStyle: { fontFamily: "open-sans" },
+          statusBarStyle: "light",
           animation: "fade_from_bottom",
         }}
       >
