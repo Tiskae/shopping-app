@@ -1,45 +1,60 @@
+import React from "react";
 import { Platform } from "react-native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import ProductOverviewScreen from "../screens/shop/ProductOverviewScreen";
-import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
-
+import ProductsNavigator from "./ProductsNavigator";
+import OrdersNavigator from "./OrdersNavigator";
 import colors from "../constants/colors";
+import { Ionicons } from "@expo/vector-icons";
 
-const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 const ShopNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator
+      <Drawer.Navigator
         screenOptions={{
-          headerStyle: {
-            backgroundColor:
-              Platform.OS === "android" ? colors.primary : "white",
+          gestureEnabled: true,
+          drawerType: "front",
+          headerTitleAlign: "center",
+          headerShown: false,
+          drawerActiveTintColor: colors.primary,
+          drawerContentStyle: {
+            padding: 0,
+            margin: 0,
           },
-          headerTintColor: Platform.OS === "android" ? "white" : colors.primary,
-          headerTitleStyle: { fontFamily: "open-sans-bold" },
-          headerBackTitleStyle: { fontFamily: "open-sans" },
-          statusBarStyle: "light",
-          animation: "fade_from_bottom",
         }}
       >
-        <Stack.Screen
-          name="ProductsOveviewScreen"
-          component={ProductOverviewScreen}
+        <Drawer.Screen
+          name="ProductsNavigator"
+          component={ProductsNavigator}
           options={{
-            title: "All Products",
+            title: "Products",
+            drawerIcon: (drawerConfig) => (
+              <Ionicons
+                name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
+                size={23}
+                color={drawerConfig.color}
+              />
+            ),
           }}
         />
-        <Stack.Screen
-          name="ProductDetailScreen"
-          component={ProductDetailScreen}
-          options={(navData) => ({
-            title: navData.route.params.productTitle,
-          })}
+        <Drawer.Screen
+          name="OrdersNavigator"
+          component={OrdersNavigator}
+          options={{
+            title: "Your Orders",
+            drawerIcon: (drawerConfig) => (
+              <Ionicons
+                name={Platform.OS === "android" ? "md-list" : "ios-list"}
+                size={23}
+                color={drawerConfig.color}
+              />
+            ),
+          }}
         />
-      </Stack.Navigator>
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 };

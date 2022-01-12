@@ -7,6 +7,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import productReducer from "./store/reducers/products";
 import cartReducer from "./store/reducers/cart";
+import OrdersReducer from "./store/reducers/orders";
+
 import ShopNavigator from "./navigation/ShopNavigator";
 import { Platform, StatusBar } from "react-native";
 import colors from "./constants/colors";
@@ -14,6 +16,7 @@ import colors from "./constants/colors";
 const rootReducer = combineReducers({
   products: productReducer,
   cart: cartReducer,
+  orders: OrdersReducer,
 });
 
 const fetchFonts = () =>
