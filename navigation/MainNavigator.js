@@ -1,18 +1,25 @@
 import React from "react";
-import { Platform } from "react-native";
+import { Platform, StatusBar } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 
 import ProductsNavigator from "./ProductsNavigator";
 import OrdersNavigator from "./OrdersNavigator";
+import AdminNavigator from "./AdminNavigator";
+
 import colors from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 
 const Drawer = createDrawerNavigator();
 
-const ShopNavigator = () => {
+const MainNavigator = () => {
   return (
     <NavigationContainer>
+      <StatusBar
+        backgroundColor={Platform.OS === "android" ? colors.primary : "white"}
+        translucent={false}
+        barStyle={Platform === "android" ? "dark-content" : "light-content"}
+      />
       <Drawer.Navigator
         screenOptions={{
           gestureEnabled: true,
@@ -54,9 +61,23 @@ const ShopNavigator = () => {
             ),
           }}
         />
+        <Drawer.Screen
+          name="AdminNavigator"
+          component={AdminNavigator}
+          options={{
+            title: "Admin",
+            drawerIcon: (drawerConfig) => (
+              <Ionicons
+                name={Platform.OS === "android" ? "md-create" : "ios-create"}
+                size={23}
+                color={drawerConfig.color}
+              />
+            ),
+          }}
+        />
       </Drawer.Navigator>
     </NavigationContainer>
   );
 };
 
-export default ShopNavigator;
+export default MainNavigator;

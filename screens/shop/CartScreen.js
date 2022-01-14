@@ -43,7 +43,7 @@ const CartScreen = (props) => {
         </Text>
         <View style={styles.defaultScreenBtn}>
           <Button
-            title="View all products"
+            title="Go back to products"
             color={colors.primary}
             onPress={props.navigation.goBack}
           />
@@ -56,7 +56,7 @@ const CartScreen = (props) => {
     <View style={styles.screen}>
       <View style={styles.summary}>
         <Text style={styles.summaryText}>
-          Total: ${Math.abs(cartTotalAmount).toFixed(2)}
+          Total: ${Math.round(cartTotalAmount.toFixed(2) * 100) / 100}
         </Text>
         <Button
           title="Order Now"
@@ -76,6 +76,7 @@ const CartScreen = (props) => {
             onRemove={() => {
               dispatch(removeFromCart(itemData.item.productId));
             }}
+            deletable={true}
           />
         )}
       />

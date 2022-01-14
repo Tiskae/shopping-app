@@ -9,9 +9,7 @@ import productReducer from "./store/reducers/products";
 import cartReducer from "./store/reducers/cart";
 import OrdersReducer from "./store/reducers/orders";
 
-import ShopNavigator from "./navigation/ShopNavigator";
-import { Platform, StatusBar } from "react-native";
-import colors from "./constants/colors";
+import MainNavigator from "./navigation/MainNavigator";
 
 const rootReducer = combineReducers({
   products: productReducer,
@@ -41,12 +39,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <StatusBar
-        backgroundColor={Platform.OS === "android" ? colors.primary : "white"}
-        translucent={false}
-        barStyle={Platform === "android" ? "dark-content" : "light-content"}
-      />
-      <ShopNavigator />
+      <MainNavigator />
     </Provider>
   );
 }
