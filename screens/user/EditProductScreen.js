@@ -130,7 +130,7 @@ const EditProductScreen = (props) => {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
-      behavior="position"
+      behavior="positions"
       keyboardVerticalOffset={10}
     >
       <ScrollView>
