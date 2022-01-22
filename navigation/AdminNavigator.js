@@ -58,8 +58,6 @@ const AdminNavigator = () => {
         name="EditProductScreen"
         component={EditProductScreen}
         options={(navData) => {
-          // console.log(navData);
-
           const submitFunc = navData.route.params.submit;
           return {
             title: navData.route.params?.productId
@@ -73,10 +71,7 @@ const AdminNavigator = () => {
                     Platform.OS === "android" ? "md-checkmark" : "ios-checkmark"
                   }
                   color="black"
-                  onPress={() => {
-                    submitFunc();
-                    navData.navigation.goBack();
-                  }}
+                  onPress={submitFunc}
                 />
               </HeaderButtons>
             ),
