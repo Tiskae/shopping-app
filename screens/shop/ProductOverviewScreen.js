@@ -23,21 +23,26 @@ const ProductOverviewScreen = (props) => {
 
   const loadProducts = useCallback(async () => {
     setIsLoading(true);
-    try {
-      await dispatch(fetchProducts());
-    } catch (err) {
-      console.log("Reached catch block", err);
-      setError(err.message);
-    }
-    setIsLoading(false);
-  });
+    setError(null);
 
-  useEffect(() => {}, [dispatch, loadProducts]);
+    dispatch(fetchProducts())
+      .then(() => setIsLoading(false))
+      .catch((error) => setError(error.message));
+  }, [dispatch, setIsLoading, setError]);
+
+  useEffect(() => {
+    loadProducts();
+  }, [dispatch, loadProducts]);
 
   if (error) {
     return (
       <View style={styles.centered}>
         <Text>{error}</Text>
+        <Button
+          title="Try again"
+          onPress={loadProducts}
+          color={colors.primary}
+        />
       </View>
     );
   }

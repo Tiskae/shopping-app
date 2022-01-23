@@ -8,7 +8,7 @@ export const SET_PRODUCTS = "SET_PRODUCTS";
 export const fetchProducts = () => async (dispatch, getStore) => {
   try {
     const response = await fetch(
-      "https://rn-shopping-app-856e9-default-rtdb.firebaseio.com/products.jsn/"
+      "https://rn-shopping-app-856e9-default-rtdb.firebaseio.com/products.jso/"
     );
 
     // alert(response.ok);
@@ -39,7 +39,7 @@ export const fetchProducts = () => async (dispatch, getStore) => {
     });
   } catch (err) {
     // send to custom analytics
-    // throw err;
+    throw new Error(err);
   }
 };
 
