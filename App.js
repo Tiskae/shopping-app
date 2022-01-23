@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import Apploading from "expo-app-loading";
 import * as Fonts from "expo-font";
-import { composeWithDevTools } from "redux-devtools-extension";
+// import { composeWithDevTools } from "redux-devtools-extension";
+import ReduxThunk from "redux-thunk";
 
 import productReducer from "./store/reducers/products";
 import cartReducer from "./store/reducers/cart";
@@ -23,18 +24,16 @@ const fetchFonts = () =>
     "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
   });
 
-const store = createStore(rootReducer, composeWithDevTools());
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 export default function App() {
-  useEffect(() => {
-    fetch("https://rn-shopping-app-856e9-default-rtdb.firebaseio.com/")
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      // .then((json) => console.log(json))
-      .catch((err) => console.error(err));
-  }, []);
+  // useEffect(() => {
+  //   fetch("https://rn-shopping-app-856e9-default-rtdb.firebaseio.com/")
+  //     .then((response) => {
+  //       console.log(response);
+  //     })
+  //     .catch((err) => console.error(err));
+  // }, []);
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
   if (!fontsLoaded) {
