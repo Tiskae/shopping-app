@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   StyleSheet,
@@ -21,14 +21,26 @@ const ProductOverviewScreen = (props) => {
   const products = useSelector((state) => state.products.availableProducts);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const loadProducts = () => {
-      setIsLoading(true);
-      dispatch(fetchProducts()).then(() => setIsLoading(false));
-      setIsLoading(false);
-    };
-    loadProducts();
-  }, [dispatch]);
+  const loadProducts = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      await dispatch(fetchProducts());
+    } catch (err) {
+      console.log("Reached catch block", err);
+      setError(err.message);
+    }
+    setIsLoading(false);
+  });
+
+  useEffect(() => {}, [dispatch, loadProducts]);
+
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text>{error}</Text>
+      </View>
+    );
+  }
 
   if (isLoading) {
     return (

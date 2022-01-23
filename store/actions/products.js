@@ -11,10 +11,10 @@ export const fetchProducts = () => async (dispatch, getStore) => {
       "https://rn-shopping-app-856e9-default-rtdb.firebaseio.com/products.jsn/"
     );
 
+    // alert(response.ok);
     if (!response.ok) {
       throw new Error("Something went wrong");
     }
-    // console.log(response);
 
     const resData = await response.json();
     // console.log(resData);
@@ -39,7 +39,7 @@ export const fetchProducts = () => async (dispatch, getStore) => {
     });
   } catch (err) {
     // send to custom analytics
-    throw err;
+    // throw err;
   }
 };
 
