@@ -1,0 +1,52 @@
+import React from "react";
+import { useSelector } from "react-redux";
+import { StyleSheet, FlatList, Text, View, Button } from "react-native";
+import OrderItem from "../../components/shop/OrderItem";
+import colors from "../../constants/colors";
+
+const OrdersScreen = (props) => {
+  const orders = useSelector((state) => state.orders.orders);
+
+  if (orders.length === 0)
+    return (
+      <View style={styles.defaultScreen}>
+        <Text style={styles.defaultScreenText}>
+          Your have not made any orders yet!
+        </Text>
+        <View style={styles.defaultScreenBtn}>
+          <Button
+            title="Go back to products"
+            color={colors.primary}
+            onPress={props.navigation.goBack}
+          />
+        </View>
+      </View>
+    );
+
+  return (
+    <FlatList
+      data={orders}
+      renderItem={(itemData) => (
+        <OrderItem
+          amount={itemData.item.totalAmount}
+          date={itemData.item.readableDate}
+          items={itemData.item.items}
+        />
+      )}
+    />
+  );
+};
+
+export default OrdersScreen;
+
+const styles = StyleSheet.create({
+  defaultScreen: { flex: 1, justifyContent: "center" },
+  defaultScreenText: {
+    textAlign: "center",
+    fontSize: 16,
+    fontFamily: "open-sans",
+    marginHorizontal: 20,
+    color: "#999",
+  },
+  defaultScreenBtn: { alignItems: "center", marginTop: 10 },
+});
