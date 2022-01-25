@@ -5,9 +5,12 @@ import {
   View,
   Alert,
   KeyboardAvoidingView,
+  ActivityIndicator,
+  Text,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/UI/Input";
+import colors from "../../constants/colors";
 import { createProduct, updateProduct } from "../../store/actions/products";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
@@ -41,6 +44,9 @@ const formReducer = (state, action) => {
 };
 
 const EditProductScreen = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+  // const [error, setError] = useState("");
+
   const selectedProductId = props.route.params?.productId;
 
   let selectedProduct;
@@ -82,27 +88,40 @@ const EditProductScreen = (props) => {
       ]);
       return;
     }
-    if (selectedProduct) {
-      dispatch(
-        updateProduct(
-          selectedProductId,
-          formState.inputValues.title,
-          formState.inputValues.description,
-          formState.inputValues.imageUrl
-        )
-      );
-    } else {
-      dispatch(
-        createProduct(
-          formState.inputValues.title,
-          formState.inputValues.description,
-          formState.inputValues.imageUrl,
-          +formState.inputValues.price
-        )
-      );
+    try {
+      setIsLoading(true);
+      if (selectedProduct) {
+        dispatch(
+          updateProduct(
+            selectedProductId,
+            formState.inputValues.title,
+            formState.inputValues.description,
+            formState.inputValues.imageUrl
+          )
+        ).then(() => {
+          setIsLoading(false);
+          props.navigation.goBack();
+        });
+      } else {
+        dispatch(
+          createProduct(
+            formState.inputValues.title,
+            formState.inputValues.description,
+            formState.inputValues.imageUrl,
+            +formState.inputValues.price
+          )
+        ).then(() => {
+          setIsLoading(false);
+          props.navigation.goBack();
+        });
+      }
+    } catch (error) {
+      console.log("Reached catch block");
+      Alert.alert("Something went wrong", error, [{ text: Okay }]);
+      setIsLoading(false);
+      // setError(error.message);
     }
-    props.navigation.goBack();
-  }, [dispatch, selectedProductId, formState]);
+  }, [dispatch, selectedProductId, formState, setIsLoading]);
 
   useEffect(() => {
     selectedProductId && setIsPriceDefault(true);
@@ -126,6 +145,22 @@ const EditProductScreen = (props) => {
       input: inputIdentifier,
     });
   };
+
+  // if (error) {
+  //   return (
+  //     <View style={styles.centered}>
+  //       <Text>{error}</Text>
+  //     </View>
+  //   );
+  // }
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={colors.primary} />
+      </View>
+    );
+  }
 
   return (
     <KeyboardAvoidingView
@@ -193,4 +228,9 @@ export default EditProductScreen;
 
 const styles = StyleSheet.create({
   form: { margin: 20 },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });

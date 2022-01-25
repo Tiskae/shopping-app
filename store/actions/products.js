@@ -8,7 +8,7 @@ export const SET_PRODUCTS = "SET_PRODUCTS";
 export const fetchProducts = () => async (dispatch, getStore) => {
   try {
     const response = await fetch(
-      "https://rn-shopping-app-856e9-default-rtdb.firebaseio.com/products.jso/"
+      "https://rn-shopping-app-856e9-default-rtdb.firebaseio.com/products.json/"
     );
 
     // alert(response.ok);
@@ -44,11 +44,24 @@ export const fetchProducts = () => async (dispatch, getStore) => {
 };
 
 export const deleteProduct = (productId) => {
-  return {
-    type: DELETE_PRODUCT,
-    payload: {
-      productId,
-    },
+  return async (dispatch) => {
+    const response = await fetch(
+      `https://rn-shopping-app-856e9-default-rtdb.firebaseio.com/products/${productId}.json/`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to delete product!");
+    }
+
+    dispatch({
+      type: DELETE_PRODUCT,
+      payload: {
+        productId,
+      },
+    });
   };
 };
 
@@ -67,7 +80,7 @@ export const createProduct = (title, description, imageUrl, price) => {
     );
 
     const resData = await response.json();
-    console.log(resData);
+    // console.log(resData);
 
     dispatch({
       type: CREATE_PRODUCT,
@@ -77,8 +90,30 @@ export const createProduct = (title, description, imageUrl, price) => {
 };
 
 export const updateProduct = (id, title, description, imageUrl) => {
-  return {
-    type: UPDATE_PRODUCT,
-    payload: { id, title, description, imageUrl },
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        `https://rn-shopping-app-856e9-default-rtdb.firebaseio.com/products/${id}.jso/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ title, description, imageUrl }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to update product!");
+      }
+
+      dispatch({
+        type: UPDATE_PRODUCT,
+        payload: { id, title, description, imageUrl },
+      });
+    } catch (error) {
+      console.error(error.message);
+      throw new Error(error);
+    }
   };
 };

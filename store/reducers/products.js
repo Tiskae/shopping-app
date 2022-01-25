@@ -8,10 +8,10 @@ import {
 } from "../actions/products";
 
 const initialState = {
-  // availableProducts: PRODUCTS,
-  availableProducts: [],
-  // userProducts: PRODUCTS.filter((product) => (product.ownerId = "u1")),
-  userProducts: [],
+  availableProducts: PRODUCTS,
+  // availableProducts: [],
+  userProducts: PRODUCTS.filter((product) => (product.ownerId = "u1")),
+  // userProducts: [],
 };
 
 export default (state = initialState, action) => {
