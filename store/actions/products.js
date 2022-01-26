@@ -93,7 +93,7 @@ export const updateProduct = (id, title, description, imageUrl) => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        `https://rn-shopping-app-856e9-default-rtdb.firebaseio.com/products/${id}.jso/`,
+        `https://rn-shopping-app-856e9-default-rtdb.firebaseio.com/products/${id}.json/`,
         {
           method: "PATCH",
           headers: {
