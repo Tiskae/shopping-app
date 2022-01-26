@@ -10,11 +10,17 @@ import AdminNavigator from "./AdminNavigator";
 import colors from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 
+///////////////////////////////////
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AuthScreen from "../screens/user/AuthScreen";
+const Stack = createNativeStackNavigator();
+
 const Drawer = createDrawerNavigator();
 
 const MainNavigator = () => {
   return (
-    <NavigationContainer>
+    // <NavigationContainer>
+    <>
       <StatusBar
         backgroundColor={Platform.OS === "android" ? colors.primary : "white"}
         translucent={false}
@@ -76,8 +82,22 @@ const MainNavigator = () => {
           }}
         />
       </Drawer.Navigator>
-    </NavigationContainer>
+    </>
+    // </NavigationContainer>
   );
 };
+/////////////////////////////////////
+const FinalNavigator = () => (
+  <NavigationContainer>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="AuthScreen" component={AuthScreen} />
+      <Stack.Screen
+        name="MainNavigator"
+        component={MainNavigator}
+        options={{ headerShown: true }}
+      />
+    </Stack.Navigator>
+  </NavigationContainer>
+);
 
-export default MainNavigator;
+export default FinalNavigator;
