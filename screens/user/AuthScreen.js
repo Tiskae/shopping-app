@@ -10,7 +10,21 @@ import {
 import Input from "../../components/UI/Input";
 
 const AuthScreen = (props) => {
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <View
+        style={{
+          flex: 1,
+          height: "100%",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "pink",
+        }}
+      >
+        <Text>Alaye sign in or sign up</Text>
+      </View>
+    </View>
+  );
 };
 
 export default AuthScreen;

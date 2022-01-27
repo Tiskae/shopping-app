@@ -90,11 +90,21 @@ const MainNavigator = () => {
 const FinalNavigator = () => (
   <NavigationContainer>
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="AuthScreen" component={AuthScreen} />
+      <Stack.Screen name="MainNavigator" component={MainNavigator} />
       <Stack.Screen
-        name="MainNavigator"
-        component={MainNavigator}
-        options={{ headerShown: true }}
+        name="AuthScreen"
+        component={AuthScreen}
+        options={{
+          headerShown: true,
+          headerTitle: "Authenticate",
+          headerStyle: {
+            backgroundColor:
+              Platform.OS === "android" ? colors.primary : "white",
+          },
+          headerTintColor: Platform.OS === "android" ? "white" : colors.primary,
+          headerTitleStyle: { fontFamily: "open-sans-bold" },
+          headerTitleAlign: "center",
+        }}
       />
     </Stack.Navigator>
   </NavigationContainer>
