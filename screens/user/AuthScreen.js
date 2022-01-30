@@ -46,7 +46,7 @@ const AuthScreen = (props) => {
         <Card style={styles.authContainer}>
           <ScrollView>
             <Input
-              label="E-mail"
+              label="Email"
               textChanged={emailChangedHandler}
               value={emailState.value}
               hasError={emailState.hasError}
@@ -66,7 +66,7 @@ const AuthScreen = (props) => {
             </View>
             <View style={styles.btnContainer}>
               <Button
-                title="Switch to Sign up"
+                title="Switch to Sign Up"
                 color={colors.accent}
                 onPress={() => {}}
               />
