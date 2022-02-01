@@ -7,13 +7,17 @@ import {
   KeyboardAvoidingView,
   Button,
 } from "react-native";
+import { useDispatch } from "react-redux";
 import Card from "../../components/UI/Card";
 
 import Input from "../../components/UI/Input";
 import colors from "../../constants/colors";
 import { LinearGradient } from "expo-linear-gradient";
+import { signUp } from "../../store/actions/auth";
 
 const AuthScreen = (props) => {
+  const dispatch = useDispatch();
+
   const [emailState, setEmailState] = React.useState({
     value: "",
     hasError: false,
@@ -32,12 +36,18 @@ const AuthScreen = (props) => {
       touched: prev.touched,
     }));
   };
-  const PasswordChangedHandler = (newValue) => {
+  const passwordChangedHandler = (newValue) => {
     setPasswordState((prev) => ({
       value: newValue,
       hasError: prev.hasError,
       touched: prev.touched,
     }));
+  };
+
+  const signUpHandler = () => {
+    if (!emailState.hasError && !passwordState.hasError) {
+      dispatch(signUp(emailState.value, passwordState.value));
+    }
   };
 
   return (
@@ -55,14 +65,18 @@ const AuthScreen = (props) => {
             />
             <Input
               label="Password"
-              textChanged={PasswordChangedHandler}
+              textChanged={passwordChangedHandler}
               value={passwordState.value}
               hasError={passwordState.hasError}
               touched={passwordState.touched}
               errorMessage="Please enter a valid password"
             />
             <View style={styles.btnContainer}>
-              <Button title="Login" color={colors.primary} onPress={() => {}} />
+              <Button
+                title="Login"
+                color={colors.primary}
+                onPress={signUpHandler}
+              />
             </View>
             <View style={styles.btnContainer}>
               <Button
