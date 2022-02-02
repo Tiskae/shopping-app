@@ -1,11 +1,12 @@
 import React from "react";
 import {
   StyleSheet,
-  Text,
   View,
   ScrollView,
   KeyboardAvoidingView,
   Button,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import Card from "../../components/UI/Card";
@@ -13,41 +14,74 @@ import Card from "../../components/UI/Card";
 import Input from "../../components/UI/Input";
 import colors from "../../constants/colors";
 import { LinearGradient } from "expo-linear-gradient";
-import { signUp } from "../../store/actions/auth";
+import { login, signUp } from "../../store/actions/auth";
 
 const AuthScreen = (props) => {
   const dispatch = useDispatch();
 
+  const [signUpMode, setSignUpMode] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState(null);
+
+  const switchSignUpMode = () => setSignUpMode((prevState) => !prevState);
+
+  React.useEffect(() => {
+    if (error) Alert.alert("Something went wrong", error, [{ text: "Okay" }]);
+  }, [error]);
+
   const [emailState, setEmailState] = React.useState({
     value: "",
-    hasError: false,
+    hasError: true, // Initially empty
     touched: false,
   });
   const [passwordState, setPasswordState] = React.useState({
     value: "",
-    hasError: false,
+    hasError: true, // Initially empty
     touched: false,
   });
 
   const emailChangedHandler = (newValue) => {
-    setEmailState((prev) => ({
+    const isValid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+      newValue
+    );
+
+    setEmailState({
       value: newValue,
-      hasError: prev.hasError,
-      touched: prev.touched,
-    }));
+      hasError: !isValid,
+      touched: true,
+    });
   };
   const passwordChangedHandler = (newValue) => {
-    setPasswordState((prev) => ({
+    const isValid = newValue !== "" && newValue.length >= 8;
+
+    setPasswordState({
       value: newValue,
-      hasError: prev.hasError,
-      touched: prev.touched,
-    }));
+      hasError: !isValid,
+      touched: true,
+    });
   };
 
-  const signUpHandler = () => {
-    if (!emailState.hasError && !passwordState.hasError) {
-      dispatch(signUp(emailState.value, passwordState.value));
+  const authHandler = () => {
+    if (emailState.hasError || passwordState.hasError) {
+      return;
     }
+
+    let authAction;
+    if (signUpMode) {
+      authAction = signUp(emailState.value, passwordState.value);
+    } else {
+      authAction = login(emailState.value, passwordState.value);
+    }
+
+    setError(null);
+    setIsLoading(true);
+    dispatch(authAction)
+      .then(() => setIsLoading(false))
+      .catch((err) => {
+        // Alert(err);
+        setError(err.message);
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -64,25 +98,33 @@ const AuthScreen = (props) => {
               errorMessage="Please enter a valid Email address"
             />
             <Input
+              secureTextEntry
               label="Password"
               textChanged={passwordChangedHandler}
               value={passwordState.value}
               hasError={passwordState.hasError}
               touched={passwordState.touched}
-              errorMessage="Please enter a valid password"
+              errorMessage="Too short!"
             />
             <View style={styles.btnContainer}>
-              <Button
-                title="Login"
-                color={colors.primary}
-                onPress={signUpHandler}
-              />
+              {isLoading ? (
+                <ActivityIndicator size="small" color={colors.primary} />
+              ) : (
+                <Button
+                  title={signUpMode ? "Sign Up" : "Login"}
+                  color={colors.primary}
+                  onPress={authHandler}
+                  disabled={Boolean(
+                    emailState.hasError && passwordState.hasError
+                  )}
+                />
+              )}
             </View>
             <View style={styles.btnContainer}>
               <Button
-                title="Switch to Sign Up"
+                title={`Switch to ${signUpMode ? "login" : "sign up"}`}
                 color={colors.accent}
-                onPress={() => {}}
+                onPress={switchSignUpMode}
               />
             </View>
           </ScrollView>

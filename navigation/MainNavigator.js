@@ -105,8 +105,8 @@ const FinalNavigator = () => (
           headerTitleAlign: "left",
         }}
       />
+      <Stack.Screen name="MainNavigator" component={MainNavigator} />
     </Stack.Navigator>
-    <Stack.Screen name="MainNavigator" component={MainNavigator} />
   </NavigationContainer>
 );
 
