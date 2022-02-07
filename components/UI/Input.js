@@ -7,6 +7,7 @@ const Input = (props) => {
       <Text style={styles.label}>{props.label}</Text>
       <TextInput
         {...props}
+        keyboardType=""
         style={styles.input}
         onChangeText={props.textChanged}
         value={props.value}

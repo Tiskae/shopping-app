@@ -36,12 +36,15 @@ export const signUp = (email, password) => {
       }
 
       const resData = await result.json();
-      console.log("resData", resData);
+      // console.log("resData", resData);
+
+      dispatch({
+        type: SIGNUP,
+        payload: { token: resData.idToken, userId: resData.localId },
+      });
     } catch (error) {
       throw new Error(error.message);
     }
-
-    dispatch({ type: SIGNUP });
   };
 };
 
@@ -63,7 +66,7 @@ export const login = (email, password) => {
         }
       );
 
-      //   console.log("result", result);
+      // console.log("result", result);
 
       if (!result.ok) {
         const resultData = await result.json();
@@ -81,11 +84,14 @@ export const login = (email, password) => {
       }
 
       const resData = await result.json();
-      console.log("resData", resData);
+      // console.log("resData", resData);
+
+      dispatch({
+        type: LOGIN,
+        payload: { token: resData.idToken, userId: resData.localId },
+      });
     } catch (error) {
       throw new Error(error.message);
     }
-
-    dispatch({ type: LOGIN });
   };
 };

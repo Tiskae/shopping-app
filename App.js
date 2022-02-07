@@ -6,14 +6,16 @@ import * as Fonts from "expo-font";
 // import { composeWithDevTools } from "redux-devtools-extension";
 import reduxThunk from "redux-thunk";
 
-import productReducer from "./store/reducers/products";
+import AuthReducer from "./store/reducers/auth";
+import ProductReducer from "./store/reducers/products";
 import cartReducer from "./store/reducers/cart";
 import OrdersReducer from "./store/reducers/orders";
 
 import MainNavigator from "./navigation/MainNavigator";
 
 const rootReducer = combineReducers({
-  products: productReducer,
+  auth: AuthReducer,
+  products: ProductReducer,
   cart: cartReducer,
   orders: OrdersReducer,
 });
