@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import StartupScreen from "../screens/StartupScreen";
 import AuthScreen from "../screens/user/AuthScreen";
 
 const Stack = createNativeStackNavigator();
@@ -15,6 +16,7 @@ const AuthNavigator = () => {
         headerTitleAlign: "center",
       }}
     >
+      <Stack.Screen name="StartupScreen" component={StartupScreen} />
       <Stack.Screen name="AuthScreen" component={AuthScreen} />
     </Stack.Navigator>
   );
