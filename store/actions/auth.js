@@ -1,3 +1,5 @@
+import { AsyncStorage } from "react-native";
+
 export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN";
 
@@ -37,6 +39,15 @@ export const signUp = (email, password) => {
 
       const resData = await result.json();
       // console.log("resData", resData);
+
+      // Save data to device storage for auto login
+      const expirationDate = new Date(
+        new Date().getTime() + parseInt(resData.expiresIn) * 1000
+      );
+      console.log(expirationDate.toISOString());
+      // console.log(resData.expiresIn);
+
+      saveDataToSTorage(resData.idToken, resData.localId, expirationDate);
 
       dispatch({
         type: SIGNUP,
@@ -86,6 +97,15 @@ export const login = (email, password) => {
       const resData = await result.json();
       // console.log("resData", resData);
 
+      // Save data to device storage for auto login
+      const expirationDate = new Date(
+        new Date().getTime() + parseInt(resData.expiresIn) * 1000
+      );
+      console.log(expirationDate.toISOString());
+      // console.log(resData.expiresIn);
+
+      saveDataToSTorage(resData.idToken, resData.localId, expirationDate);
+
       dispatch({
         type: LOGIN,
         payload: { token: resData.idToken, userId: resData.localId },
@@ -94,4 +114,15 @@ export const login = (email, password) => {
       throw new Error(error.message);
     }
   };
+};
+
+const saveDataToSTorage = (token, userId, expirationDate) => {
+  AsyncStorage.setItem(
+    "userData",
+    JSON.stringify({
+      token: token,
+      userId: userId,
+      expirationDate: expirationDate.toISOString(),
+    })
+  );
 };

@@ -32,6 +32,15 @@ const UserProductScreen = (props) => {
   };
 
   const dispatch = useDispatch();
+
+  if (userProducts.length === 0) {
+    return (
+      <View style={styles.centered}>
+        <Text>There are no products available at the moment.</Text>
+      </View>
+    );
+  }
+
   return (
     <FlatList
       data={userProducts}
@@ -64,5 +73,10 @@ export default UserProductScreen;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+  },
+  centered: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
