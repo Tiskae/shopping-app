@@ -2,6 +2,17 @@ import { AsyncStorage } from "react-native";
 
 export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN";
+export const AUTHENTICATE = "AUTHENTICATE";
+
+export const authenticate = (userId, token) => {
+  return {
+    type: AUTHENTICATE,
+    payload: {
+      userId,
+      token,
+    },
+  };
+};
 
 export const signUp = (email, password) => {
   return async (dispatch) => {
