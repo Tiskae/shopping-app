@@ -8,10 +8,10 @@ import {
 } from "../actions/products";
 
 const initialState = {
-  availableProducts: PRODUCTS,
-  // availableProducts: [],
-  userProducts: PRODUCTS.filter((product) => (product.ownerId = "u1")),
-  // userProducts: [],
+  // availableProducts: PRODUCTS,
+  availableProducts: [],
+  // userProducts: PRODUCTS.filter((product) => product.ownerId == "u1"),
+  userProducts: [],
 };
 
 export default (state = initialState, action) => {
@@ -19,9 +19,7 @@ export default (state = initialState, action) => {
     case SET_PRODUCTS:
       return {
         availableProducts: action.payload.products,
-        userProducts: action.payload.products.filter(
-          (product) => (product.ownerId = "u1")
-        ),
+        userProducts: action.payload.userProducts,
       };
     case DELETE_PRODUCT:
       return {
@@ -36,7 +34,7 @@ export default (state = initialState, action) => {
     case CREATE_PRODUCT:
       const newProduct = new Product(
         action.payload.id,
-        "u1",
+        action.payload.ownerId,
         action.payload.title,
         action.payload.imageUrl,
         action.payload.description,
