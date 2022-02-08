@@ -15,7 +15,7 @@ export const authenticate = (userId, token) => {
 };
 
 export const signUp = (email, password) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
       const result = await fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBL3cznugPr8vlT7j3oWzG2vqbAaYoPElI",
