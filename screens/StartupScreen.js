@@ -6,8 +6,12 @@ import {
   AsyncStorage,
 } from "react-native";
 import colors from "../constants/colors";
+import { useDispatch } from "react-redux";
+import { authenticate } from "../store/actions/auth";
 
 const StartupScreen = (props) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const tryLogin = async () => {
       const userData = await AsyncStorage.getItem("userData");
@@ -24,6 +28,7 @@ const StartupScreen = (props) => {
         return;
       }
 
+      dispatch(authenticate(transformedData.token, transformedData.userId));
       props.navigation.navigate("MainNavigator");
     };
 

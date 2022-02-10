@@ -1,15 +1,13 @@
 import { AsyncStorage } from "react-native";
 
-export const SIGNUP = "SIGNUP";
-export const LOGIN = "LOGIN";
 export const AUTHENTICATE = "AUTHENTICATE";
 
-export const authenticate = (userId, token) => {
+export const authenticate = (token, userId) => {
   return {
     type: AUTHENTICATE,
     payload: {
-      userId,
       token,
+      userId,
     },
   };
 };
@@ -60,10 +58,7 @@ export const signUp = (email, password) => {
 
       saveDataToSTorage(resData.idToken, resData.localId, expirationDate);
 
-      dispatch({
-        type: SIGNUP,
-        payload: { token: resData.idToken, userId: resData.localId },
-      });
+      dispatch(authenticate(resData.idToken, resData.localId));
     } catch (error) {
       throw new Error(error.message);
     }
@@ -117,10 +112,7 @@ export const login = (email, password) => {
 
       saveDataToSTorage(resData.idToken, resData.localId, expirationDate);
 
-      dispatch({
-        type: LOGIN,
-        payload: { token: resData.idToken, userId: resData.localId },
-      });
+      dispatch(authenticate(resData.idToken, resData.localId));
     } catch (error) {
       throw new Error(error.message);
     }
