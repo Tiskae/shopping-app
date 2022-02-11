@@ -1,6 +1,7 @@
 import { AsyncStorage } from "react-native";
 
 export const AUTHENTICATE = "AUTHENTICATE";
+export const LOGOUT = "LOGOUT";
 
 export const authenticate = (token, userId) => {
   return {
@@ -116,6 +117,12 @@ export const login = (email, password) => {
     } catch (error) {
       throw new Error(error.message);
     }
+  };
+};
+
+export const logout = () => {
+  return {
+    type: LOGOUT,
   };
 };
 
