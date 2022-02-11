@@ -1,21 +1,19 @@
 import { AsyncStorage } from "react-native";
 
-export const SIGNUP = "SIGNUP";
-export const LOGIN = "LOGIN";
 export const AUTHENTICATE = "AUTHENTICATE";
 
-export const authenticate = (userId, token) => {
+export const authenticate = (token, userId) => {
   return {
     type: AUTHENTICATE,
     payload: {
-      userId,
       token,
+      userId,
     },
   };
 };
 
 export const signUp = (email, password) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       const result = await fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBL3cznugPr8vlT7j3oWzG2vqbAaYoPElI",
@@ -60,10 +58,7 @@ export const signUp = (email, password) => {
 
       saveDataToSTorage(resData.idToken, resData.localId, expirationDate);
 
-      dispatch({
-        type: SIGNUP,
-        payload: { token: resData.idToken, userId: resData.localId },
-      });
+      dispatch(authenticate(resData.idToken, resData.localId));
     } catch (error) {
       throw new Error(error.message);
     }
@@ -117,10 +112,7 @@ export const login = (email, password) => {
 
       saveDataToSTorage(resData.idToken, resData.localId, expirationDate);
 
-      dispatch({
-        type: LOGIN,
-        payload: { token: resData.idToken, userId: resData.localId },
-      });
+      dispatch(authenticate(resData.idToken, resData.localId));
     } catch (error) {
       throw new Error(error.message);
     }

@@ -12,7 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 ///////////////////////////////////
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AuthScreen from "../screens/user/AuthScreen";
+import AuthNavigator from "./AuthNavigator";
 const Stack = createNativeStackNavigator();
 
 const Drawer = createDrawerNavigator();
@@ -20,7 +20,6 @@ const Drawer = createDrawerNavigator();
 const MainNavigator = () => {
   return (
     // <NavigationContainer>
-
     <Drawer.Navigator
       screenOptions={{
         gestureEnabled: true,
@@ -89,10 +88,9 @@ const FinalNavigator = () => (
       barStyle={Platform === "android" ? "dark-content" : "light-content"}
     />
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {/* <Stack.Screen name="MainNavigator" component={MainNavigator} /> */}
       <Stack.Screen
         name="AuthScreen"
-        component={AuthScreen}
+        component={AuthNavigator}
         options={{
           headerTitle: "Authenticate",
           headerShown: true,
