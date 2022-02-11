@@ -16,6 +16,9 @@ import { Ionicons } from "@expo/vector-icons";
 ///////////////////////////////////
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AuthNavigator from "./AuthNavigator";
+import { useDispatch } from "react-redux";
+import { logout } from "../store/actions/auth";
+import LogoutButton from "../components/LogoutButton";
 const Stack = createNativeStackNavigator();
 
 const Drawer = createDrawerNavigator();
@@ -34,18 +37,26 @@ const MainNavigator = () => {
           padding: 0,
           margin: 0,
         },
-        drawerContent: (props) => (
-          <View>
+      }}
+      drawerContent={(props) => {
+        // const dispatch = useDispatch();
+
+        return (
+          <View style={{ padding: 20 }}>
             <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
               <DrawerItemList {...props} />
-              <Button
+              {/* <Button
                 title="Logout"
                 color={colors.primary}
-                onPress={() => {}}
-              />
+                onPress={() => {
+                  dispatch(logout);
+                  props.navigation.navigate("AuthScreen");
+                }}
+              /> */}
+              <LogoutButton />
             </SafeAreaView>
           </View>
-        ),
+        );
       }}
     >
       <Drawer.Screen
