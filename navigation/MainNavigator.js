@@ -1,6 +1,9 @@
 import React from "react";
-import { Platform, StatusBar } from "react-native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { Platform, StatusBar, SafeAreaView, Button, View } from "react-native";
+import {
+  createDrawerNavigator,
+  DrawerItemList,
+} from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 
 import ProductsNavigator from "./ProductsNavigator";
@@ -31,6 +34,18 @@ const MainNavigator = () => {
           padding: 0,
           margin: 0,
         },
+        drawerContent: (props) => (
+          <View>
+            <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
+              <DrawerItemList {...props} />
+              <Button
+                title="Logout"
+                color={colors.primary}
+                onPress={() => {}}
+              />
+            </SafeAreaView>
+          </View>
+        ),
       }}
     >
       <Drawer.Screen
