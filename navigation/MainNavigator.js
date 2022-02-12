@@ -45,14 +45,14 @@ const MainNavigator = () => {
           <View style={{ padding: 20 }}>
             <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
               <DrawerItemList {...props} />
-              {/* <Button
+              <Button
                 title="Logout"
                 color={colors.primary}
                 onPress={() => {
                   dispatch(logout);
                   props.navigation.navigate("AuthScreen");
                 }}
-              /> */}
+              />
               <LogoutButton />
             </SafeAreaView>
           </View>
