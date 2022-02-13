@@ -115,7 +115,7 @@ const FinalNavigator = () => (
     />
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name="AuthScreen"
+        name="AuthNavigator"
         component={AuthNavigator}
         options={{
           headerTitle: "Authenticate",
