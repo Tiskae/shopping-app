@@ -53,9 +53,7 @@ const MainNavigator = () => {
                   props.navigation.navigate("AuthScreen");
                 }}
               /> */}
-              <LogoutButton
-                onLogout={() => props.navigation.navigate("AuthScreen")}
-              />
+              <LogoutButton />
             </SafeAreaView>
           </View>
         );
