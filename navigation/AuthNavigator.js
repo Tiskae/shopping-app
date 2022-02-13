@@ -15,6 +15,7 @@ const AuthNavigator = () => {
         headerTintColor: Platform.OS === "android" ? "white" : colors.primary,
         headerTitleStyle: { fontFamily: "open-sans-bold" },
         headerTitleAlign: "center",
+        headerShown: false,
       }}
     >
       <Stack.Screen name="StartupScreen" component={StartupScreen} />

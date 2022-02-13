@@ -14,8 +14,6 @@ export default (state = initialState, action) => {
         userId: action.payload.userId,
       };
     case LOGOUT:
-      console.log("Logged out!!!");
-
       // Reset everything back to normal
       return initialState;
 

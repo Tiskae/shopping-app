@@ -3,8 +3,9 @@ import {
   View,
   ActivityIndicator,
   StyleSheet,
-  AsyncStorage,
+  // AsyncStorage,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import colors from "../constants/colors";
 import { useDispatch } from "react-redux";
 import { authenticate } from "../store/actions/auth";
