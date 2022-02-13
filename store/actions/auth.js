@@ -109,7 +109,7 @@ export const login = (email, password) => {
       const expirationDate = new Date(
         new Date().getTime() + parseInt(resData.expiresIn) * 1000
       );
-      console.log(expirationDate.toISOString());
+      // console.log(expirationDate.toISOString());
       // console.log(resData.expiresIn);
 
       saveDataToSTorage(resData.idToken, resData.localId, expirationDate);
@@ -122,6 +122,7 @@ export const login = (email, password) => {
 };
 
 export const logout = () => {
+  AsyncStorage.clear();
   return {
     type: LOGOUT,
   };

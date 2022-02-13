@@ -5,19 +5,24 @@ import { logout } from "../store/actions/auth";
 import colors from "../constants/colors";
 
 const LogoutButton = (props) => {
-  console.log(props.logout);
+  //   console.log(props.logout);
 
   return (
-    <Button title="Logout" color={colors.primary} onPress={props.logout} />
+    <Button
+      title="Logout"
+      color={colors.primary}
+      onPress={() => {
+        props.logout();
+        props.onLogout();
+      }}
+    />
   );
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => {
-      //   console.log(dispatch(logout));
-
-      dispatch(logout);
+      dispatch(logout());
     },
   };
 };
