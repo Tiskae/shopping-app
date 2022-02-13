@@ -24,7 +24,15 @@ const StartupScreen = (props) => {
         return;
       }
 
-      dispatch(authenticate(transformedData.token, transformedData.userId));
+      const expirationTime = expiryDate.getTime() - new Date().getTime();
+
+      dispatch(
+        authenticate(
+          transformedData.token,
+          transformedData.userId,
+          expirationTime
+        )
+      );
       props.navigation.navigate("MainNavigator");
     };
 
