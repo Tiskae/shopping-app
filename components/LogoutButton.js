@@ -13,7 +13,6 @@ const LogoutButton = (props) => {
       color={colors.primary}
       onPress={() => {
         props.logout();
-        props.onLogout();
       }}
     />
   );
