@@ -8,7 +8,7 @@ import MainNavigator from "./MainNavigator";
 const NavigationContainer = (props) => {
   const navRef = useRef();
   const token = useSelector((state) => state.auth.token);
-  console.log(token);
+  //   console.log(token);
 
   useEffect(() => {
     if (!token) {
