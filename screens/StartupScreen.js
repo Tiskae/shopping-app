@@ -19,6 +19,7 @@ const StartupScreen = (props) => {
       const { token, userId, expirationDate } = transformedData;
       const expiryDate = new Date(expirationDate);
 
+      // Making sure token is present and still valid
       if (expiryDate <= new Date() || !token || !userId) {
         props.navigation.navigate("AuthScreen");
         return;
