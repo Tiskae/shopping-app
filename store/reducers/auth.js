@@ -14,7 +14,6 @@ export default (state = initialState, action) => {
         userId: action.payload.userId,
       };
     case LOGOUT:
-      // Reset everything back to normal
       return initialState;
 
     default:
