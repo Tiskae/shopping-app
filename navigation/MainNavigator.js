@@ -25,7 +25,6 @@ const Drawer = createDrawerNavigator();
 
 const MainNavigator = () => {
   return (
-    // <NavigationContainer>
     <Drawer.Navigator
       screenOptions={{
         gestureEnabled: true,
@@ -45,14 +44,6 @@ const MainNavigator = () => {
           <View style={{ padding: 20 }}>
             <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
               <DrawerItemList {...props} />
-              {/* <Button
-                title="Logout"
-                color={colors.primary}
-                onPress={() => {
-                  dispatch(logout);
-                  props.navigation.navigate("AuthScreen");
-                }}
-              /> */}
               <LogoutButton />
             </SafeAreaView>
           </View>
@@ -102,7 +93,6 @@ const MainNavigator = () => {
         }}
       />
     </Drawer.Navigator>
-    // </NavigationContainer>
   );
 };
 /////////////////////////////////////
