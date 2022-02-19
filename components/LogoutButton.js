@@ -5,8 +5,6 @@ import { logout } from "../store/actions/auth";
 import colors from "../constants/colors";
 
 const LogoutButton = (props) => {
-  //   console.log(props.logout);
-
   return (
     <Button
       title="Logout"
